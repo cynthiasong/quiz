@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>测测你的留学知识段位，是小白还是学霸？</title>
+<link rel="shortcut icon" href="images/icon.jpg" type="image/x-icon" />
+<link rel="bookmark" href="images/icon.jpg" />
+<link rel="stylesheet" href="assets/animation.css" />
+<link rel="stylesheet" href="assets/common.css" />
+<link rel="stylesheet" href="assets/multiple.css" />
+
+<style>
+/*body{background: url("images/bg.png") repeat ;}*/
+.t-btn1{
+	color:#fff;
+	background: url("images/titlepanel.png") no-repeat;
+	background-position: center center;
+	background-size: contain;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left:40px;
+	padding-right:40px;
+	text-align: center;
+	margin:0 auto;
+}
+.t-s::after{
+	position:absolute;
+	right:5px;
+	top:0;
+	padding:4px;    
+	background:rgba(255,255,255,0);
+	content:url("images/select.png");
+	display:none;
+	opacity:0;
+	-webkit-transition:opacity 0.3s ease;
+}
+
+.animation-breath{
+	-webkit-animation:breath 1s ease-in-out infinite;
+}
+@-webkit-keyframes breath {
+		0% { opacity: 0.4; }                          
+		50%  { opacity: 1; }                       
+		100%   { opacity: 0.4; }
+}
+#preload{
+	display:none;
+}
+
+</style>
+<script src="assets/common.js"></script>
+</head>
+<body>
+<div class="main" id="main">
+	<div class="title-area">
+		<div class="head" id="btimg"><img id="head-img" src="images/banner.jpg"></div>
+		<div class="lt-w" id="toptit"><div id="dbt" class="t-btn1">测测你的留学知识段位</div></div>
+	</div>
+	<div style="display: none;" class="start-area" id="start">
+		<div class="auto-div start-auto">
+			<div class="div-inner"><div class="circle"></div><div class="home-desc" id="home-desc"></div></div>
+		</div>
+		<div class="start-btn" onClick="startTest();">开始测试</div>
+	</div>
+	<div style="display: block;" id="wenti">
+		<div id="progress-lable">测试进度：<span id="pro-label-span">1/10</span></div>
+		<div class="progress"><div style="width: 10%;" id="precent"></div></div>
+		<div class="question-only" id="question">某机构表示单个咨询师在每个申请季只带7个学生，如何判断其所说是否属实？</div>
+		<div id="ti" style="display: block; font-size: 16px; text-align: center; color: rgb(255, 255, 255);">
+			<div style="display: none;" id="ti0" class="t-c"><img id="picti" src=""><img id="preload" src=""></div>
+			<div id="selections">
+				<div id="tia" vel="0" num="a." class="t-s" onClick="select(this);">要求其出具教育部颁发的留学中介资质认证</div>
+				<div id="tib" vel="10" num="b." class="t-s" onClick="select(this);">根据对方提供的服务学生数量和签约金额，计算公司成本，看是否在合理范围内</div>
+				<div id="tic" vel="0" nu
+        m="c." class="t-s" onClick="select(this);">实地参观该公司的运营情况和工作人员态度</div>
+				<div id="tid" vel="0" num="d." class="t-s" onClick="select(this);">业内黑幕，我们无从判断</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="result" id="result">
+		<div class="auto-div">
+			<div class="div-inner">
+				<div class="circle"></div>
+				<div class="result-title" id="result-title"></div>
+				<div class="result-desc" id="result-desc"></div>
+        <div>
+          <img class="qr-code" src="images/hiture-qrcode.gif">
+        </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var dbt='测测你的留学知识段位';	//测试标题
+
+	// 问题
+  var xlist = eval([ // 1
+  {"question":"某机构表示单个咨询师在每个申请季只带7个学生，如何判断其所说是否属实？","answer":{"a":{"title":"要求其出具教育部颁发的留学中介资质认证","weight":"0"},"b":{"title":"根据对方提供的服务学生数量和签约金额，计算公司成本，看是否在合理范围内","weight":"10"},"c":{"title":"实地参观该公司的运营情况和工作人员态度","weight":"0"},"d":{"title":"业内黑幕，我们无从判断","weight":"0"}}},
+   
+    // 2
+    {"question":"关于以往留学案例，哪个描述是正确的？","answer":{"a":{"title":"留学案例都是过去时，对今年不适用","weight":"0"},"b":{"title":"看到跟我同样的GPA和托福成绩，我也一定能上同样的学校","weight":"0"},"c":{"title":"根据自己的情况和案例中作对比，再作判断","weight":"10"},"d":{"title":"留学案例完全不可信，都是编的","weight":"0"}}},
+  
+    // 3
+    {"question":"Jimmy打算找留学机构帮助自己申请美国优秀院校留学，以下建议正确的是？","answer":{"a":{"title":"具体了解公司口碑、为你服务的咨询师水平，不管公司大小","weight":"10"},"b":{"title":"某留学机构有教育部颁发的中介资质和很多名校案例，这个才有保障","weight":"0"},"c":{"title":"有事问度娘，排名靠前的留学机构说明很不错","weight":"0"},"d":{"title":"机构保证所有咨询师做美国留学都有10年以上时间了","weight":"0"}}},
+ 
+  // 4
+    {"question":"Jerry准备申请留学时发现自己的GPA是严重短板，以下哪种应对方法是不可取的？","answer":{"a":{"title":"提升GT成绩、科研经历等其他方面的背景，以弥补短板","weight":"0"},"b":{"title":"在剩下的学习时间中努力提高GPA，确保GPA的整体呈上升趋势","weight":"0"},"c":{"title":"想办法私下篡改以往课程成绩","weight":"10"},"d":{"title":"在PS和推荐信中针对不理想的成绩做出一定解释","weight":"0"}}},
+  // 5
+    {"question":"Lily在提交网申后，发现网申中有信息填写错误，以下哪种解决办法最有效？","answer":{"a":{"title":"直接重新提交一份新的网申","weight":"0"},"b":{"title":"联系学校小米，提出更改信息的要求","weight":"10"},"c":{"title":"联系学校小米，要求取消之前的网申，重新填写提交","weight":"0"},"d":{"title":"不用管，等学校发现了会邮件告知Lily修改","weight":"0"}}},
+  // 6
+    {"question":"Linda正在进行申请文书中的个人陈述(personal statement)写作，以下哪一项不是要求的写作内容：","answer":{"a":{"title":"介绍自己的学术兴趣和动机","weight":"0"},"b":{"title":"总结你的本科/研究生中有价值的经历","weight":"0"},"c":{"title":"思考为什么选择这所学校","weight":"0"},"d":{"title":"针对简历中提及的所有经历进行细致描述，让录取委员会充分了解自己","weight":"10"}}},
+
+    // 7
+    {"question":"申请国外院校研究生的Jeff开始准备推荐信了，以下关于推荐信的说法哪项是错误的？","answer":{"a":{"title":"推荐信最好至少包含两封学术推荐信","weight":"0"},"b":{"title":"推荐人在写推荐信时应提供具体的事例以佐证自己的评价","weight":"0"},"c":{"title":"如果能找到职位很高的推荐人，即使不熟悉自己也没关系","weight":"10"},"d":{"title":"提前询问推荐人对你的大概评价，做到心中有数","weight":"0"}}},
+    // 8
+  
+    {"question":"Nancy准备给所申请的学校邮寄成绩单，以下哪项是错误的？","answer":{"a":{"title":"要求学校出具官方中英文成绩单，并有学校的盖章","weight":"0"},"b":{"title":"若学校不提供英文版成绩单，不能自行翻译成英文","weight":"10"},"c":{"title":"目前很多学校可以直接扫描正式成绩单后在网申中上传，申请时无需邮寄","weight":"0"},"d":{"title":"中英文成绩单需要密封装在学校信封中，并在信封封口处由学校盖章","weight":"0"}}},
+  // 9
+  {"question":"用于留学申请的TOEFL/IELTS 和GRE/GMAT分别几年内有效？","answer":{"a":{"title":"1年， 3年","weight":"0"},"b":{"title":"2年， 5年","weight":"10"},"c":{"title":"2年， 4年","weight":"0"},"d":{"title":"1年， 4年","weight":"0"}}},
+  
+  // 10
+  {"question":"以下关于申请相关信息的说法正确的是","answer":{"a":{"title":"常见的美国研究生网申系统包括德州系统，Apply web 系统，Apply yourself 系统和Common 系统","weight":"0"},"b":{"title":"录取委员会在评估申请时首要看重的包括GPA，资金证明，标准化考试成绩和简历、个人陈述等文书材料","weight":"0"},"c":{"title":"MS和MEng学位在申请PhD时是一视同仁的","weight":"0"},"d":{"title":"计算GPA时按照自己学校的绩点加权方法选择 4.0、5.0 或者 100 分制即可","weight":"10"}}}]);
+
+
+    
+	
+    var fontstyle = eval([{"fontSize":"16px","textAlign":"center","color":"#fff"}]);
+    var ylist = eval([
+      {"threshold":"10","title":"极品小白","desc":"少年，原来你就是小白中的大白菜！<br><br>【正确答案：1B 2C 3A 4C 5B 6D 7C 8B 9B 10D】<br><br>紧急预警：此类菜品目前正在遭遇黑心中介机构的大量收割……你还有一次自救机会：<br>关注【和创留学HiTure】微信公众号，回复【详解】，获取详细解析和留学大礼包，教你分分钟摆脱小白思维！","sharetitle":"在《测测你的留学知识段位》中我获得“极品小白”，快来测测你的段位？"},
+
+      {"threshold":"40","title":"小白","desc":"留学问题多，谁不曾小白，撞上黑中介，坏事又破财……<br><br>【正确答案：1B 2C 3A 4C 5B 6D 7C 8B 9B 10D】<br><br>少年，只有提高姿势水平才是拒绝陷阱的王道！<br>关注【和创留学HiTure】微信公众号，回复【详解】，获取详细解析和留学大礼包，教你分分钟摆脱小白思维！","sharetitle":"在《测测你的留学知识段位》中我获得“小白”，快来测测你的段位？"},
+
+      {"threshold":"60","title":"高知小白","desc":"你的姿势水平已经站在了大量普通小白之上，快快迈出变身学霸的最后一步吧！<br><br>【正确答案：1B 2C 3A 4C 5B 6D 7C 8B 9B 10D】<br><br>关注【和创留学HiTure】微信公众号，回复【详解】，获取详细解析和留学大礼包，教你彻底摆脱小白思维！","sharetitle":"在《测测你的留学知识段位》中我获得高知小白”，快来测测你的段位？"},
+
+      {"threshold":"80","title":"学霸预备役","desc":"虽然相对正规役学霸还有进步空间……不过恭喜你已经脱离小白队伍，可以开始修炼成神秘笈了！<br><br>【正确答案：1B 2C 3A 4C 5B 6D 7C 8B 9B 10D】<br><br>关注【和创留学HiTure】微信公众号，回复【详解】，获取详细解析和留学大礼包，让你的留学知识段位更上一层楼！","sharetitle":"在《测测你的留学知识段位》中我获得“学霸预备役”，快来测测你的段位？"},
+
+      {"threshold":"90","title":"学霸","desc":"四眼望去，众多小白正在对你顶礼膜拜，我知道你是怎么想的：不想成神的学霸不是好学霸！<br><br>【正确答案：1B 2C 3A 4C 5B 6D 7C 8B 9B 10D】<br><br>关注【和创留学HiTure】微信公众号，回复【详解】，获取详细解析和留学大礼包，助你在成神路上更进一步！","sharetitle":"在《测测你的留学知识段位》中我获得“学霸”，快来测测你的段位？"},
+
+      {"threshold":"100","title":"学霸究极体","desc":"语言已经不足以形容我对你的景仰之情……相信黑中介在你面前一定无所遁形啦！<br><br>不过注意学成理论知识之后，实践才是你当下的重中之重！<br>关注【和创留学HiTure】微信公众号，回复【详解】，获取留学大礼包，时时助你查漏补缺吧。","sharetitle":"在《测测你的留学知识段位》中我获得“学霸究极体”，快来测测你的段位？"}]);
+
+    var total=xlist.length; // 总题数
+    var finish = 1; // 已完成题数
+    var score = 0; //分数
+    
+    //开始游戏
+    function startTest(){    	
+    	setTimeout(function () {            
+            addClass(document.getElementById('main'),'animation-next');
+   	        document.getElementById('start').style.display = 'none';
+  	        document.getElementById('wenti').style.display = 'block';
+        },500)        
+    }
+
+    //切换题目区域
+    function creatanserElement(anser){
+    	var vel = 1;
+    	var xieti = '';
+    	for(index in anser){
+    		xieti +=  "<div id='ti" +index + "'" +" vel='"  +index + "'" +  " num='" +index + ".'" +" class='t-s' onclick='select(this);'><span></span></div>";
+    	}
+    	document.getElementById('selections').innerHTML = xieti;
+    }
+   
+    //切换题目
+    function setquestion(i){
+      	creatanserElement(xlist[i].answer);
+       	addClass(document.getElementById('question'), 'question-only');
+       	document.getElementById('question').innerHTML = xlist[i].question;
+       	document.getElementById('ti0').style.display = 'none';
+        for(anser in xlist[i].answer){			
+            document.getElementById('ti' + anser).innerHTML = xlist[i].answer[anser].title; //换题
+    				
+    				document.getElementById('ti' + anser).setAttribute('vel',xlist[i].answer[anser].weight);
+			
+    		}
+
+		
+     }
+
+    //判断选择项
+     function panduan(selected){    
+    	    selected = parseInt(selected);
+    	    score += selected;
+    	    console.log('score' + score);		        		
+       		if(total== finish){
+       			console.log('finish' + finish)
+       			showResult();     			
+       		}else{
+         			setquestion(finish);
+         			finish += 1;
+       		}	
+      } 
+     
+     //结果
+     function showResult(){
+         	var answerTitle='';
+         	var answerDesc='';
+     	   	 for(i=0; i< ylist.length; i++){
+     	   		
+     	   			 if(score <= ylist[i].threshold){
+                    answerTitle = ylist[i].title;
+                    answerDesc= ylist[i].desc;
+                    datashareinfo.title = ylist[i].sharetitle;
+                    break;
+     	   			 }
+     	   		
+     		   }
+       		 document.getElementById('result-title').innerHTML = answerTitle;
+       		 document.getElementById('result-desc').innerHTML = answerDesc;
+       		 document.getElementById('dbt').innerHTML = dbt;
+       		 document.title=dbt;
+     		   document.getElementById('wenti').style.display = 'none';
+         	 document.getElementById('result').style.display = 'block'; 
+         	 document.getElementById('ad_bottom').style.bottom = '50px';  	          
+     }
+</script>
+
+
+<script>
+  function select(dom){
+      	removeClass(dom,'active'); 
+      	//removeClass(document.body,'animation-next');
+      	removeClass(document.getElementById('main'),'animation-next');
+      	addClass(dom,'active');
+      	setTimeout(function () {
+              panduan(dom.getAttribute('vel'));
+              updateProcess();
+              removeClass(dom,'active');
+              addClass(document.getElementById('main'),'animation-next');
+          },500)
+          
+   } 
+  
+  function initFont(){
+  		if(typeof(fontstyle) != 'undefined'){
+  			for(stye in fontstyle[0]){
+  			    document.getElementById('ti').style[stye] = fontstyle[0][stye];
+  			   // document.getElementById('ti' + anser).style.textAlign = 'center';
+  			}
+  		}
+  }   
+</script>
+<script>
+	var process = 1/total;
+    var i = 1;
+    function updateProcess(){
+        process =  1/total * i * 100;
+        if(i>= total) i=total;
+        if(process >= 100) process=100;
+        document.getElementById('precent').style.width = process + '%';
+        document.getElementById('pro-label-span').innerHTML = i + '/' + total;
+        i++;
+    }
+    
+    function setbanner(){
+  	   
+ 		   document.getElementById('head-img').setAttribute('src','images/banner.jpg');
+ 	 
+     }
+
+    function initGame(){
+      	if("".trim() == ""){
+     	        document.getElementById('start').style.display = 'none';
+    	        document.getElementById('wenti').style.display = 'block';
+      	}
+      	else{
+          	document.getElementById('home-desc').innerHTML = ''; 
+      	}
+  	   setbanner();
+  	   document.getElementById('dbt').innerHTML = dbt;
+  	   document.title=dbt;
+  	   setquestion(0); // 初始化    	   
+  	   initFont();	
+  	   updateProcess();
+    } 
+
+    initGame();
+    
+</script>
+
+<script language="javascript">
+
+var datashareinfo = {
+		title :  '我在参加了一个测试,你也快来测测',
+		desc :   '很准的呦,都来试试吧！',
+		
+};
+
+</script>
+
+<div style="display:none"></div>
+<style>
+.ad_bottom {
+	text-align: center;
+	left:0px;
+	right:0px;
+	bottom: 0;
+	position: fixed;
+	z-index:999;
+}
+#ifr{height: 50px!important;}
+#spn{height: 50px!important;}
+#botBoxClose{z-index:20000;top:-20px;}
+#botBoxClose{position:absolute;text-align:center;right:0px;top:2px;width:20px;height:20px;line-height:18px;
+border-radius:10px;background:rgba(0,0,0,0.6);color:#fff;font-size:16px;font-family:arial;cursor:pointer;
+}
+
+</style>
+
+</body>
+</html>
